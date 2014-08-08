@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
 
@@ -16,12 +16,18 @@
 </head>
 
 <body>
+    {{ current_client }} </br>
+        <ul>
+            {% for top in type_of_product %}
+                <li>{{ top }}</li>
+            {% endfor %}
+        </ul>
  	{% if all_products %}
     	<ul>
-    {% for prod in all_products %}
-        <li>{{ prod }}</li>
-    {% endfor %}
-    	</ul>
+        {% for prod in all_products %}
+            <li>{{ prod }}</li>
+        {% endfor %}
+    	    </ul>
 	{% else %}
     	<p>Pas de produits.</p>
 	{% endif %}

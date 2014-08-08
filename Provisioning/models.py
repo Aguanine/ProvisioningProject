@@ -23,15 +23,19 @@ class Product(models.Model):
         self.update_date = timezone.now()
 
     def __unicode__(self):
-        return u'Product Name : %s ; ' \
+        return u'Type Of Product : %s ; ' \
+               u'Product Name : %s ; ' \
                u'Software Version : %s ; ' \
                u'MAC : %s ; ' \
                u'Serial Number : %s ; ' \
+               u'Client : %s ; ' \
                u'Date Creation : %s ; ' \
-               u'Date Update : %s' % (self.product_name,
+               u'Date Update : %s' % (self.type_of_product,
+                                      self.product_name,
                                       self.software_version,
                                       self.mac,
                                       self.serial_number,
+                                      self.client,
                                       self.create_date,
                                       self.update_date)
 
@@ -39,28 +43,29 @@ class Product(models.Model):
 
 class Client(models.Model):
     name = models.CharField(max_length=200, unique=True)
+    folder = models.CharField(max_length=200, unique=True)
     type_of_products = models.ManyToManyField("TypeOfProduct")
 
     def __unicode__(self):
-        return u'Name of client : %s' % self.name
+        return u'%s' % self.name
 
 
 
 class TypeOfProduct(models.Model):
     label = models.CharField(max_length=200, unique=True)
+    name_config = models.CharField(max_length=200, unique=True)
 
     def __unicode__(self):
-        return u'Type of product : %s' % self.label
+        return u'%s' % self.label
 
 
 
 class ConfigProduct(models.Model):
-    name_config = models.CharField(max_length=200, unique=True)
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
 
     def __unicode__(self):
-        return u'Name of config : %s' % self.name_config
+        return u'%s -> %s' % (self.client, self.type_of_product)
 
     class Meta:
         unique_together = ("client", "type_of_product")

@@ -1,0 +1,110 @@
+[
+    {
+        "pk": 1,
+        "model": "Provisioning.client",
+        "fields": {
+            "folder": "SEWAN",
+            "name": "Sewan",
+            "type_of_products": [2]
+        }
+    },
+    {
+        "pk": 2,
+        "model": "Provisioning.client",
+        "fields": {
+            "folder": "NOMOTECH_OZONE",
+            "name": "Nomotech - Ozone",
+            "type_of_products": [2]
+        }
+    },
+    {
+        "pk": 3,
+        "model": "Provisioning.client",
+        "fields": {
+            "folder": "ALSATIS",
+            "name": "Alsatis",
+            "type_of_products": [4]
+        }
+    },
+    {
+        "pk": 4,
+        "model": "Provisioning.client",
+        "fields": {
+            "folder": "VIADIALOG",
+            "name": "ViaDialog",
+            "type_of_products": [3]
+        }
+    },
+    {
+        "pk": 1,
+        "model": "Provisioning.typeofproduct",
+        "fields": {
+            "name_config": "SPA112.xml",
+            "label": "SPA112"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "Provisioning.typeofproduct",
+        "fields": {
+            "name_config": "SPA122.xml",
+            "label": "SPA122"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "Provisioning.typeofproduct",
+        "fields": {
+            "name_config": "SPA50x_30x.xml",
+            "label": "SPA50x_30x"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "Provisioning.typeofproduct",
+        "fields": {
+            "name_config": "WRP400.xml",
+            "label": "WRP400"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "Provisioning.configproduct",
+        "fields": {
+            "type_of_product": 2,
+            "client": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "Provisioning.configproduct",
+        "fields": {
+            "type_of_product": 2,
+            "client": 2
+        }
+    },
+    {
+        "pk": 3,
+        "model": "Provisioning.configproduct",
+        "fields": {
+            "type_of_product": 4,
+            "client": 3
+        }
+    },
+    {
+        "pk": 4,
+        "model": "Provisioning.configproduct",
+        "fields": {
+            "type_of_product": 3,
+            "client": 4
+        }
+    },
+    {
+        "pk": 1,
+        "model": "Provisioning.currentclient",
+        "fields": {
+            "current_client": 3
+        }
+    }
+]
+

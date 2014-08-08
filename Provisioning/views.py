@@ -10,7 +10,9 @@ def index(request,):
 
     template = loader.get_template('index.html')
     context = RequestContext(request, {
-        'all_products': current_client.product_set.all()
+        'all_products': current_client.product_set.all(),
+        'current_client': current_client,
+        'type_of_product': current_client.type_of_products.all()
     })
     return StreamingHttpResponse(template.render(context))
 
