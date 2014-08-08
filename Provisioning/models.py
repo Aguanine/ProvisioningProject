@@ -1,56 +1,71 @@
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
-
-# class Poll(models.Model):
-    # question = models.CharField(max_length=200)
-    # pub_date = models.DateTimeField('date published')
-# 
-# class Choice(models.Model):
-    # poll = models.ForeignKey(Poll)
-    # choice_text = models.CharField(max_length=200)
-    # votes = models.IntegerField(default=0)
-
 
 class Product(models.Model):
     product_name = models.CharField(max_length=200)
     software_version = models.CharField(max_length=200)
-    mac = models.CharField(max_length=200)
-    serial_number = models.CharField(max_length=200)
+    mac = models.CharField(max_length=200, unique=True)
+    serial_number = models.CharField(max_length=200, unique=True)
     create_date = models.DateTimeField()
     update_date = models.DateTimeField(auto_now=True)
-    
-    def __init__(self, *args, **kwargs) :
-        super(Product, self).__init__(*args, **kwargs)
-    
-    def init(self, serial_number, mac, product_name, software_version) :
+    client = models.ForeignKey("Client")
+    type_of_product = models.ForeignKey("TypeOfProduct")
+
+    def create(self, serial_number, mac, product_name, software_version, client, type_of_product):
         self.product_name = product_name
         self.software_version = software_version
         self.mac = mac
         self.serial_number = serial_number
+        self.client = client
+        self.type_of_product = type_of_product
         self.create_date = timezone.now()
         self.update_date = timezone.now()
-    
-    def __unicode__(self):  # Python 3: def __str__(self):
-        return "Product Name : %s ; Software Version : %s ; MAC : %s ; Serial Number : %s ; Date Creation : %s ; Date Update : %s" % (self.product_name, self.software_version, self.mac, self.serial_number, self.create_date, self.update_date)
-    
-    def __str__(self):
-        return "Product Name : %s ; Software Version : %s ; MAC : %s ; Serial Number : %s ; Date Creation : %s ; Date Update : %s" % (self.product_name, self.software_version, self.mac, self.serial_number, self.create_date, self.update_date)
-        
+
+    def __unicode__(self):
+        return u'Product Name : %s ; ' \
+               u'Software Version : %s ; ' \
+               u'MAC : %s ; ' \
+               u'Serial Number : %s ; ' \
+               u'Date Creation : %s ; ' \
+               u'Date Update : %s' % (self.product_name,
+                                      self.software_version,
+                                      self.mac,
+                                      self.serial_number,
+                                      self.create_date,
+                                      self.update_date)
+
+
 
 class Client(models.Model):
-    Name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
+    type_of_products = models.ManyToManyField("TypeOfProduct")
+
+    def __unicode__(self):
+        return u'Name of client : %s' % self.name
 
 
-class TypeProduct(models.Model):
-    label = models.CharField(max_length=200)
-    pass
+
+class TypeOfProduct(models.Model):
+    label = models.CharField(max_length=200, unique=True)
+
+    def __unicode__(self):
+        return u'Type of product : %s' % self.label
+
 
 
 class ConfigProduct(models.Model):
-    pass
-    
-class CurentClient(models.Model):
-    pass
-    
+    name_config = models.CharField(max_length=200, unique=True)
+    client = models.ForeignKey("Client")
+    type_of_product = models.ForeignKey("TypeOfProduct")
+
+    def __unicode__(self):
+        return u'Name of config : %s' % self.name_config
+
+    class Meta:
+        unique_together = ("client", "type_of_product")
+
+
+
+class CurrentClient(models.Model):
+    current_client = models.ForeignKey("Client", unique=True)

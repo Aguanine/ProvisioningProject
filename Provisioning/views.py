@@ -1,25 +1,27 @@
 from django.shortcuts import render
 from django.http import StreamingHttpResponse
 from django.template import RequestContext, loader
-from Provisioning.models import Product
+from Provisioning.models import *
 
 # Create your views here.
-#test
-
-titi = "titi"
 
 def index(request,):
+    current_client = CurrentClient.objects.all()[0].current_client
+
     template = loader.get_template('index.html')
     context = RequestContext(request, {
-        'all_products': Product.objects.all(),
-        'titi': titi
+        'all_products': current_client.product_set.all()
     })
     return StreamingHttpResponse(template.render(context))
 
 def config(request, sn, mac, pdn, swv):
-    titi = "Truc"
+    current_client = CurrentClient.objects.all()[0].current_client
+
+    # TEST
+    tp1 = TypeOfProduct.objects.all()[0]
+
     p = Product()
-    p.init(sn, mac, pdn, swv)
+    p.create(sn, mac, pdn, swv, current_client, tp1)
     p.save()
     template = loader.get_template('WRP400.xml')
     context = RequestContext(request, {
