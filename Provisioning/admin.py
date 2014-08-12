@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Provisioning.models import Product, Client, TypeOfProduct, ConfigProduct, CurrentClient
+from Provisioning.models import Product, Client, TypeOfProduct, ConfigProduct, CurrentClientProduct
 
 admin.site.register(Product)
 
@@ -9,4 +9,4 @@ admin.site.register(TypeOfProduct)
 
 admin.site.register(ConfigProduct)
 
-admin.site.register(CurrentClient)
+admin.site.register(CurrentClientProduct)

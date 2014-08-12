@@ -9,6 +9,7 @@ class Product(models.Model):
     serial_number = models.CharField(max_length=200, unique=True)
     create_date = models.DateTimeField()
     update_date = models.DateTimeField(auto_now=True)
+    counter = models.IntegerField()
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
 
@@ -21,6 +22,8 @@ class Product(models.Model):
         self.type_of_product = type_of_product
         self.create_date = timezone.now()
         self.update_date = timezone.now()
+        self.counter = 1
+
 
     def __unicode__(self):
         return u'Type Of Product : %s ; ' \
@@ -29,6 +32,7 @@ class Product(models.Model):
                u'MAC : %s ; ' \
                u'Serial Number : %s ; ' \
                u'Client : %s ; ' \
+               u'Count : %s ; ' \
                u'Date Creation : %s ; ' \
                u'Date Update : %s' % (self.type_of_product,
                                       self.product_name,
@@ -36,6 +40,7 @@ class Product(models.Model):
                                       self.mac,
                                       self.serial_number,
                                       self.client,
+                                      self.counter,
                                       self.create_date,
                                       self.update_date)
 
@@ -72,5 +77,5 @@ class ConfigProduct(models.Model):
 
 
 
-class CurrentClient(models.Model):
-    current_client = models.ForeignKey("Client", unique=True)
+class CurrentClientProduct(models.Model):
+    current_client_product = models.ForeignKey("ConfigProduct", unique=True)

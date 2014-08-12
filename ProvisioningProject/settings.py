@@ -68,6 +68,10 @@ DATABASES = {
 
 LANGUAGE_CODE = 'fr-FR'
 
+DATE_FORMAT = '%d/%m/%Y'
+
+TIME_FORMAT = '%H:%M:%S'
+
 TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
