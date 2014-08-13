@@ -4,35 +4,32 @@ from django.template import RequestContext, loader
 from Provisioning.models import *
 from django.utils import timezone
 
-# Create your views here.
+def index(request):
 
-def index(request,):
-    current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
+    client = CurrentClientProduct.get_client()
+    type_of_product = CurrentClientProduct.get_type_of_product()
 
     template = loader.get_template('index.html')
     context = RequestContext(request, {
-        'all_products': current_client_product.client.product_set.all().filter(type_of_product=current_client_product.type_of_product,
-                                                                               create_date__gt=timezone.localtime(timezone.now()).date()),
-        'client': current_client_product.client,
-        'type_of_product': current_client_product.type_of_product
+        'all_products': client.product_set.all().filter(type_of_product=type_of_product,
+                                                        create_date__gt=timezone.localtime(timezone.now()).date()),
+        'client': client,
+        'type_of_product': type_of_product
     })
+
     return StreamingHttpResponse(template.render(context))
 
 
 def config(request, sn, mac, pdn, swv):
-    current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
+    client = CurrentClientProduct.get_client()
+    type_of_product = CurrentClientProduct.get_type_of_product()
 
-    client = current_client_product.client
-    type_of_product = current_client_product.type_of_product
-
-    listProd = client.product_set.all().filter(mac=mac, serial_number=sn)
-
-    if not listProd:
+    if Product.notexiste(sn, mac):
         p = Product()
         p.create(sn, mac, pdn, swv, client, type_of_product)
         p.save()
     else:
-        p = listProd[0]
+        p = Product.get_product(sn, mac)
         p.counter += 1
         p.save()
 

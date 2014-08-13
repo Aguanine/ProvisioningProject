@@ -13,6 +13,17 @@ class Product(models.Model):
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
 
+    @classmethod
+    def notexiste(cls, serial_number, mac):
+        if not Product.objects.all().filter(serial_number=serial_number, mac=mac):
+            return True
+        else:
+            return False
+
+    @classmethod
+    def get_product(cls, serial_number, mac):
+        return Product.objects.all().filter(serial_number=serial_number, mac=mac)[0]
+
     def create(self, serial_number, mac, product_name, software_version, client, type_of_product):
         self.product_name = product_name
         self.software_version = software_version
@@ -79,3 +90,13 @@ class ConfigProduct(models.Model):
 
 class CurrentClientProduct(models.Model):
     current_client_product = models.ForeignKey("ConfigProduct", unique=True)
+
+    @classmethod
+    def get_client(cls):
+        current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
+        return current_client_product.client
+
+    @classmethod
+    def get_type_of_product(cls):
+        current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
+        return  current_client_product.type_of_product

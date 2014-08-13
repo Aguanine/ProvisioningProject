@@ -24,12 +24,13 @@
     	<ul>
         {% for prod in all_products %}
             {% if prod.counter > 1 %}
-                <li class="error">{{ prod.mac }} ; {{ prod.serial_number }} ; {{ prod.software_version }} ; {{ prod.product_name }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
+                <li class="error">
             {% else %}
-                <li class="valide">{{ prod.mac }} ; {{ prod.serial_number }} ; {{ prod.software_version }} ; {{ prod.product_name }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
+                <li class="valide">
             {% endif %}
+                {{ prod.mac|upper }} ; {{ prod.serial_number|upper }} ; {{ prod.software_version|upper }} ; {{ prod.product_name|upper }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
         {% endfor %}
-    	    </ul>
+    	</ul>
 	{% else %}
     	<p>Pas de produits.</p>
 	{% endif %}
