@@ -28,7 +28,6 @@ class Product(models.Model):
 
     def create(self, serial_number, mac, product_name, software_version, client, type_of_product):
         self.product_name = product_name
-        self.software_version = software_version
         self.mac = mac
         self.serial_number = serial_number
         self.client = client
@@ -36,6 +35,17 @@ class Product(models.Model):
         self.create_date = timezone.now()
         self.update_date = timezone.now()
         self.counter = 0
+        self.update_isupdate(software_version)
+
+
+
+    def update_isupdate(self, software_version ):
+        firm = CurrentClientProduct.get_firmware()
+        if firm == "" or firm == software_version:
+            self.isupdate = True
+        else:
+            self.isupdate = False
+        self.software_version = software_version
 
 
     def __unicode__(self):
@@ -81,8 +91,8 @@ class TypeOfProduct(models.Model):
 class ConfigProduct(models.Model):
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
-    firmware = models.CharField(max_length=200, default="")
-    name_firmware = models.CharField(max_length=200, default="")
+    firmware = models.CharField(max_length=200, blank=True)
+    name_firmware = models.CharField(max_length=200, blank=True)
 
     def __unicode__(self):
         return u'%s -> %s' % (self.client, self.type_of_product)

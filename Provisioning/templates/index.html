@@ -27,7 +27,7 @@
     	<ol class="test">
         {% for prod in all_products %}
             {% if prod.isupdate == True %}
-                {% if prod.counter > 1 or prod.counter < 1 %}
+                {% if prod.counter != 1 %}
                     <li class="error">
                 {% else %}
                     <li class="valide">

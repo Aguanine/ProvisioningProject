@@ -36,11 +36,12 @@ def config(request, sn, mac, pdn, swv):
         p.save()
     else:
         p = Product.get_product(sn, mac)
-        if p.isupdate:
-            p.counter += 1
-            p.save()
+        p.update_isupdate(swv)
+        p.save()
 
     if p.isupdate:
+        p.counter += 1
+        p.save()
         template = loader.get_template(client.folder+'/'+type_of_product.name_config)
         context = RequestContext(request, {})
         return StreamingHttpResponse(template.render(context), content_type="text/xml")
@@ -49,33 +50,22 @@ def config(request, sn, mac, pdn, swv):
 
 def firmware(request, sn, mac, pdn, swv):
     client = CurrentClientProduct.get_client()
-    firm = CurrentClientProduct.get_firmware()
+    type_of_product = CurrentClientProduct.get_type_of_product()
 
-    if firm == "":
-        if not Product.notexiste(sn, mac):
-            p = Product.get_product(sn, mac)
-            p.isupdate = True
-            p.save()
-        return StreamingHttpResponse("")
-
-    if not Product.notexiste(sn, mac):
+    if Product.notexiste(sn, mac):
+        p = Product()
+        p.create(sn, mac, pdn, swv, client, type_of_product)
+        p.save()
+    else:
         p = Product.get_product(sn, mac)
+        p.update_isupdate(swv)
+        p.save()
 
-        if p.software_version == firm:
-            p.isupdate = True
-            p.save()
-            return StreamingHttpResponse("")
-        elif firm == swv:
-            p.isupdate = True
-            p.software_version = swv
-            p.save()
-            return StreamingHttpResponse("")
-        else:
-            p.software_version = swv
-            p.save()
-
-    BASE_DIR = os.path.dirname(os.path.dirname(__file__))+'/Provisioning/templates'
-    file_data = open(BASE_DIR+'/'+client.folder+'/'+CurrentClientProduct.get_name_firmware(), "rb").read()
-    response =  HttpResponse(file_data, mimetype="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename='+CurrentClientProduct.get_name_firmware()
-    return response
+    if p.isupdate:
+        return StreamingHttpResponse("")
+    else:
+        BASE_DIR = os.path.dirname(os.path.dirname(__file__))+'/Provisioning/templates'
+        file_data = open(BASE_DIR+'/'+client.folder+'/'+CurrentClientProduct.get_name_firmware(), "rb").read()
+        response =  HttpResponse(file_data, mimetype="application/octet-stream")
+        response['Content-Disposition'] = 'attachment; filename='+CurrentClientProduct.get_name_firmware()
+        return response
