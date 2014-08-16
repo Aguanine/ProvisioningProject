@@ -63,7 +63,7 @@
         "pk": 4,
         "model": "Provisioning.typeofproduct",
         "fields": {
-            "name_config": "WRP4002.xml",
+            "name_config": "WRP400.xml",
             "label": "WRP400"
         }
     },

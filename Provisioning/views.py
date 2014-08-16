@@ -1,18 +1,24 @@
 from django.shortcuts import render
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
 from django.template import RequestContext, loader
 from Provisioning.models import *
 from django.utils import timezone
+import os
+
 
 def index(request):
 
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
+    firm = CurrentClientProduct.get_firmware()
+
+    all_products = client.product_set.all().filter(type_of_product=type_of_product)\
+        #,create_date__gt=timezone.localtime(timezone.now()).date())
 
     template = loader.get_template('index.html')
     context = RequestContext(request, {
-        'all_products': client.product_set.all().filter(type_of_product=type_of_product,
-                                                        create_date__gt=timezone.localtime(timezone.now()).date()),
+        'all_products': all_products,
+        'firmware': firm,
         'client': client,
         'type_of_product': type_of_product
     })
@@ -30,15 +36,46 @@ def config(request, sn, mac, pdn, swv):
         p.save()
     else:
         p = Product.get_product(sn, mac)
-        p.counter += 1
-        p.save()
+        if p.isupdate:
+            p.counter += 1
+            p.save()
 
-    template = loader.get_template(client.folder+'/'+type_of_product.name_config)
+    if p.isupdate:
+        template = loader.get_template(client.folder+'/'+type_of_product.name_config)
+        context = RequestContext(request, {})
+        return StreamingHttpResponse(template.render(context), content_type="text/xml")
 
-    context = RequestContext(request, {})
-
-    return StreamingHttpResponse(template.render(context), content_type="text/xml")
-
+    return StreamingHttpResponse("", content_type="text/xml")
 
 def firmware(request, sn, mac, pdn, swv):
-    pass
+    client = CurrentClientProduct.get_client()
+    firm = CurrentClientProduct.get_firmware()
+
+    if firm == "":
+        if not Product.notexiste(sn, mac):
+            p = Product.get_product(sn, mac)
+            p.isupdate = True
+            p.save()
+        return StreamingHttpResponse("")
+
+    if not Product.notexiste(sn, mac):
+        p = Product.get_product(sn, mac)
+
+        if p.software_version == firm:
+            p.isupdate = True
+            p.save()
+            return StreamingHttpResponse("")
+        elif firm == swv:
+            p.isupdate = True
+            p.software_version = swv
+            p.save()
+            return StreamingHttpResponse("")
+        else:
+            p.software_version = swv
+            p.save()
+
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))+'/Provisioning/templates'
+    file_data = open(BASE_DIR+'/'+client.folder+'/'+CurrentClientProduct.get_name_firmware(), "rb").read()
+    response =  HttpResponse(file_data, mimetype="application/octet-stream")
+    response['Content-Disposition'] = 'attachment; filename='+CurrentClientProduct.get_name_firmware()
+    return response

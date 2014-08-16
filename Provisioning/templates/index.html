@@ -15,22 +15,29 @@
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+
+<meta http-equiv="refresh" content="10">
 </head>
 
 <body>
     Client : {{ client }} </br>
     Produit : {{ type_of_product }} </br>
+    Firmware : {{ firmware }} </br>
  	{% if all_products %}
-    	<ul>
+    	<ol class="test">
         {% for prod in all_products %}
-            {% if prod.counter > 1 %}
-                <li class="error">
+            {% if prod.isupdate == True %}
+                {% if prod.counter > 1 or prod.counter < 1 %}
+                    <li class="error">
+                {% else %}
+                    <li class="valide">
+                {% endif %}
             {% else %}
-                <li class="valide">
+                 <li class="warning">
             {% endif %}
-                {{ prod.mac|upper }} ; {{ prod.serial_number|upper }} ; {{ prod.software_version|upper }} ; {{ prod.product_name|upper }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
+                {{ prod.mac|upper }} ; {{ prod.serial_number|upper }} ; {{ prod.software_version|upper }} ; {{ prod.product_name|upper }} ; {{ prod.isupdate|upper }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
         {% endfor %}
-    	</ul>
+    	</ol>
 	{% else %}
     	<p>Pas de produits.</p>
 	{% endif %}

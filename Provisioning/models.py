@@ -12,6 +12,8 @@ class Product(models.Model):
     counter = models.IntegerField()
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
+    isupdate = models.BooleanField(default=False)
+
 
     @classmethod
     def notexiste(cls, serial_number, mac):
@@ -33,7 +35,7 @@ class Product(models.Model):
         self.type_of_product = type_of_product
         self.create_date = timezone.now()
         self.update_date = timezone.now()
-        self.counter = 1
+        self.counter = 0
 
 
     def __unicode__(self):
@@ -79,6 +81,8 @@ class TypeOfProduct(models.Model):
 class ConfigProduct(models.Model):
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
+    firmware = models.CharField(max_length=200, default="")
+    name_firmware = models.CharField(max_length=200, default="")
 
     def __unicode__(self):
         return u'%s -> %s' % (self.client, self.type_of_product)
@@ -100,3 +104,13 @@ class CurrentClientProduct(models.Model):
     def get_type_of_product(cls):
         current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
         return  current_client_product.type_of_product
+
+    @classmethod
+    def get_firmware(cls):
+        current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
+        return  current_client_product.firmware
+
+    @classmethod
+    def get_name_firmware(cls):
+        current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
+        return  current_client_product.name_firmware

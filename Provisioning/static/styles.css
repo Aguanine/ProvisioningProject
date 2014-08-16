@@ -6,8 +6,15 @@
     background-color: springgreen;
 }
 
+.warning{
+    background-color: darkorange;
+}
+
 body {
     font-family: Menlo, Consolas, "Courier New", Courier, monospace;
     color: #162029;
     background-color: #f6f7f9;
+}
+.test{
+    margin-left: 50px;
 }
