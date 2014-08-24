@@ -2,11 +2,11 @@
     background-color: red;
 }
 
-.valide{
+.valide {
     background-color: springgreen;
 }
 
-.warning{
+.warning {
     background-color: steelblue;
 }
 
@@ -15,6 +15,20 @@ body {
     color: #162029;
     background-color: #f6f7f9;
 }
-.test{
+
+.test {
     margin-left: 50px;
+    border: 0px solid; /* auront une bordure de 1px */
+    border-collapse:collapse;
+}
+
+th {
+border: thin solid #6495ed;
+padding: 20px;
+background-color: #D0E3FA;
+}
+td {
+border: thin solid #6495ed;
+padding: 6px;
+text-align: center;
 }
