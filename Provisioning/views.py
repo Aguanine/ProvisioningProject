@@ -26,13 +26,13 @@ def index(request):
     return StreamingHttpResponse(template.render(context))
 
 
-def config(request, sn, mac, pdn, swv):
+def config(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
 
     if Product.notexiste(sn, mac):
         p = Product()
-        p.create(sn, mac, pdn, swv, client, type_of_product)
+        p.create(sn, mac, pdn, hwv, swv, client, type_of_product)
         p.save()
     else:
         p = Product.get_product(sn, mac)
@@ -48,13 +48,13 @@ def config(request, sn, mac, pdn, swv):
 
     return StreamingHttpResponse("", content_type="text/xml")
 
-def firmware(request, sn, mac, pdn, swv):
+def firmware(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
 
     if Product.notexiste(sn, mac):
         p = Product()
-        p.create(sn, mac, pdn, swv, client, type_of_product)
+        p.create(sn, mac, pdn, hwv, swv, client, type_of_product)
         p.save()
     else:
         p = Product.get_product(sn, mac)

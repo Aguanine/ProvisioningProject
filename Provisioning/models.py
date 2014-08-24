@@ -5,6 +5,7 @@ from django.utils import timezone
 class Product(models.Model):
     product_name = models.CharField(max_length=200)
     software_version = models.CharField(max_length=200)
+    hardware_version = models.CharField(max_length=200)
     mac = models.CharField(max_length=200, unique=True)
     serial_number = models.CharField(max_length=200, unique=True)
     create_date = models.DateTimeField()
@@ -26,9 +27,10 @@ class Product(models.Model):
     def get_product(cls, serial_number, mac):
         return Product.objects.all().filter(serial_number=serial_number, mac=mac)[0]
 
-    def create(self, serial_number, mac, product_name, software_version, client, type_of_product):
+    def create(self, serial_number, mac, product_name, hardware_version, software_version, client, type_of_product):
         self.product_name = product_name
         self.mac = mac
+        self.hardware_version = hardware_version
         self.serial_number = serial_number
         self.client = client
         self.type_of_product = type_of_product
@@ -51,6 +53,7 @@ class Product(models.Model):
     def __unicode__(self):
         return u'Type Of Product : %s ; ' \
                u'Product Name : %s ; ' \
+               u'Hardware Version : %s' \
                u'Software Version : %s ; ' \
                u'MAC : %s ; ' \
                u'Serial Number : %s ; ' \
@@ -59,6 +62,7 @@ class Product(models.Model):
                u'Date Creation : %s ; ' \
                u'Date Update : %s' % (self.type_of_product,
                                       self.product_name,
+                                      self.hardware_version,
                                       self.software_version,
                                       self.mac,
                                       self.serial_number,

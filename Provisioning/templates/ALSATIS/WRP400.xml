@@ -1,1 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><flat-profile xmlns="http://www.sipura.net/xsd/WRP400" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sipura.net/xsd/WRP400 http://www.sipura.net/xsd/WRP400/WRP400-2-00-32.xsd">  <Provision_Enable ua="na">Yes</Provision_Enable>  <Resync_On_Reset ua="na">Yes</Resync_On_Reset>  <Resync_Random_Delay ua="na">2</Resync_Random_Delay>  <Resync_Periodic ua="na">3600</Resync_Periodic>  <Resync_Error_Retry_Delay ua="na">3600</Resync_Error_Retry_Delay>  <Forced_Resync_Delay ua="na">14400</Forced_Resync_Delay>  <Resync_Fails_On_FNF ua="na">Yes</Resync_Fails_On_FNF>  <Profile_Rule ua="na">/wrp400.cfg</Profile_Rule></flat-profile>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<flat-profile xmlns="http://www.sipura.net/xsd/WRP400" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.sipura.net/xsd/WRP400 http://www.sipura.net/xsd/WRP400/WRP400-2-00-32.xsd">
+  <GPP_A> Pre-provisionned
+  </GPP_A>
+  <Profile_Rule>https://provisioning.alsatis.com:4430/wrp$PSN_oneshot.cfg?mac=$MAC&amp;sn=$SN&amp;hw=$HWVER&amp;sw=$SWVER&amp;pst=$PRVST</Profile_Rule>
+  <Profile_Rule_B>https://provisioning.alsatis.com:4430/wrp$PSN.cfg?mac=$MAC&amp;sn=$SN&amp;hw=$HWVER&amp;sw=$SWVER&amp;pst=$PRVST</Profile_Rule_B>
+  <Resync_Periodic>5</Resync_Periodic>
+  <Time_Zone ua="na"> GMT+01:00</Time_Zone>
+  <Upgrade_Rule>https://provisioning.alsatis.com:4430/wrp$PSN_2.00.26_001.bin</Upgrade_Rule>
+</flat-profile>
+<router-configuration>
+<WL_QOS>wl_wme=on,wl_wme_no_ack=off</WL_QOS>
+<RT_QOS>QoS=1,rate_mode=1</RT_QOS>
+<RTSP>rtsp_enable=1</RTSP>
+<IGMP>force_igmp_version=2,multicast_pass=1,multicast_immediate_leave=0</IGMP>
+<UPNP>upnp_enable=0,upnp_config=1,upnp_keep_portmap=0,upnp_internet_dis=0</UPNP>
+<QOS_PRIORITY_RULE></QOS_PRIORITY_RULE>
+<WL_SECURITY_SET_1>wl_security_mode2=disabled</WL_SECURITY_SET_1>
+<WL_BASIC_SET_2>wl1_net_mode_tmp=0,wl1_closed=0,ap_isolation=1,ctrl_ssid2</WL_BASIC_SET_2>
+<WL_SECURITY_SET_1>wl_security_mode2=disabled</WL_SECURITY_SET_1>
+<WL_SECURITY_SET_2>wl1_security_mode2=disabled</WL_SECURITY_SET_2>
+<LAN_DHCP>dhcp_lease=0,dhcp_default_lease=1440</LAN_DHCP>
+<SWITCH_RATE>mv_switch_total_rate_limit=4</SWITCH_RATE>
+<WAN_TYPE>wan_proto=dhcp</WAN_TYPE>
+<WAN_DEMAND>demand=0</WAN_DEMAND>
+<WAN_HOST>wan_hostname=,wan_domain=</WAN_HOST>
+<WAN_MTU>mtu_enable=0</WAN_MTU>
+<WAN_DNS>wan_dns=0.0.0.0</WAN_DNS>
+<DHCP_RESERVATION></DHCP_RESERVATION>
+<SINGLE_PORT_FORWARDING></SINGLE_PORT_FORWARDING>
+<PORT_RANGE_FORWARDING></PORT_RANGE_FORWARDING>
+<PORT_RANGE_TRIGGERING></PORT_RANGE_TRIGGERING>
+<WAN_VLAN>wan_vlan_enable=0,wan_vlan_id=1</WAN_VLAN>
+<ROUTER_SYSLOG>log_provision=0</ROUTER_SYSLOG>
+<SECURITY_FW>filter=on,block_wan=0,block_loopback=0,ident_pass=0,block_proxy=0,block_java=0,block_activex=0,block_cookie=0</SECURITY_FW>
+<STB_OPTION>monitor_stb_vid=Motorola_</STB_OPTION>
+<DHCP_SIADDR>dhcp_siaddr_type=0,dhcp_siaddr=0.0.0.0</DHCP_SIADDR>
+<MOBILE_NETWORK>mobile_automode=1</MOBILE_NETWORK>
+<MOBILE_PROFILE>mobile_config_mode=1,mobile_papchap=auto</MOBILE_PROFILE>
+</router-configuration>

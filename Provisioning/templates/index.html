@@ -35,7 +35,7 @@
             {% else %}
                  <li class="warning">
             {% endif %}
-                {{ prod.mac|upper }} ; {{ prod.serial_number|upper }} ; {{ prod.software_version|upper }} ; {{ prod.product_name|upper }} ; {{ prod.isupdate|upper }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
+                {{ prod.mac|upper }} ; {{ prod.serial_number|upper }} ; {{ prod.hardware_version|upper }} ; {{ prod.software_version|upper }} ; {{ prod.product_name|upper }} ; {{ prod.isupdate|upper }} ; {{ prod.create_date }} ; {{ prod.counter }}</li>
         {% endfor %}
     	</ol>
 	{% else %}
