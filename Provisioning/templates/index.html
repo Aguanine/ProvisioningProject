@@ -29,6 +29,7 @@ Firmware : {{ firmware }} </br>
     <table class="test">
         <thead> <!-- En-tête du tableau -->
        <tr>
+           <th>Nb.</th>
            <th>MAC Address</th>
            <th>Serial Number</th>
            <th>Hardware Version</th>
@@ -50,6 +51,7 @@ Firmware : {{ firmware }} </br>
             {% else %}
                 <tr class="warning">
             {% endif %}
+        <td></td>
         <td>{{ prod.mac|upper }}</td>
         <td>{{ prod.serial_number|upper }}</td>
         <td>{{ prod.hardware_version|upper }}</td>
