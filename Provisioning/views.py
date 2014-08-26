@@ -61,11 +61,11 @@ def firmware(request, sn, mac, pdn, hwv, swv):
         p.update_isupdate(swv)
         p.save()
 
-    if p.isupdate:
+    if CurrentClientProduct.get_name_firmware() == "":
         return HttpResponseNotFound()
-    else:
-        BASE_DIR = os.path.dirname(os.path.dirname(__file__))+'/Provisioning/templates'
-        file_data = open(BASE_DIR+'/'+client.folder+'/'+CurrentClientProduct.get_name_firmware(), "rb").read()
-        response =  HttpResponse(file_data)
-        response['Content-Disposition'] = 'attachment; filename='+CurrentClientProduct.get_name_firmware()
-        return response
+
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))+'/Provisioning/templates'
+    file_data = open(BASE_DIR+'/'+client.folder+'/'+CurrentClientProduct.get_name_firmware(), "rb").read()
+    response = HttpResponse(file_data)
+    response['Content-Disposition'] = 'attachment; filename='+CurrentClientProduct.get_name_firmware()
+    return response
