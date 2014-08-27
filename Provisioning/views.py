@@ -3,11 +3,11 @@ from django.http import StreamingHttpResponse, HttpResponse, HttpResponseNotFoun
 from django.template import RequestContext, loader
 from Provisioning.models import *
 from django.utils import timezone
+import csv
 import os
 
 
 def index(request):
-
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
     firm = CurrentClientProduct.get_firmware()
@@ -69,3 +69,24 @@ def firmware(request, sn, mac, pdn, hwv, swv):
     response = HttpResponse(file_data)
     response['Content-Disposition'] = 'attachment; filename='+CurrentClientProduct.get_name_firmware()
     return response
+
+def export(request):
+    client = CurrentClientProduct.get_client()
+    type_of_product = CurrentClientProduct.get_type_of_product()
+
+    all_products = client.product_set.all().filter(type_of_product=type_of_product)\
+        #,create_date__gt=timezone.localtime(timezone.now()).date())
+
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    attachement = u'attachment; filename="Export-%s-%s.csv"' % (client.name, timezone.localtime(timezone.now()).date())
+    response['Content-Disposition'] = attachement
+
+    writer = csv.writer(response)
+    writer.writerow(['SN', 'MAC', 'TYPE'])
+    for x in all_products:
+        if x.isupdate and x.counter == 1:
+            writer.writerow([x.serial_number, x.mac, x.product_name])
+
+    return response
+
