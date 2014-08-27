@@ -82,7 +82,7 @@ def export(request):
     attachement = u'attachment; filename="Export-%s-%s.csv"' % (client.name, timezone.localtime(timezone.now()).date())
     response['Content-Disposition'] = attachement
 
-    writer = csv.writer(response)
+    writer = csv.writer(response, delimiter=';')
     writer.writerow(['SN', 'MAC', 'TYPE'])
     for x in all_products:
         if x.isupdate and x.counter == 1:
