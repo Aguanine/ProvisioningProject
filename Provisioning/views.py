@@ -12,8 +12,7 @@ def index(request):
     type_of_product = CurrentClientProduct.get_type_of_product()
     firm = CurrentClientProduct.get_firmware()
 
-    all_products = client.product_set.all().filter(type_of_product=type_of_product)\
-        #,create_date__gt=timezone.localtime(timezone.now()).date())
+    all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=timezone.localtime(timezone.now()).date())
 
     template = loader.get_template('index.html')
     context = RequestContext(request, {
