@@ -3,4 +3,5 @@
 	<Profile_Rule ua="na">http://phone.nomotech.net/confspa/spa$(PSN)_$(MAU).cfg</Profile_Rule>
 	<Profile_Rule_B ua="na">http://phone.nomotech.net/confspa$(PSN)/services.cfg</Profile_Rule_B>
 	<Profile_Rule_C ua="na">http://phone.nomotech.net/confspa$(PSN)/network.cfg</Profile_Rule_C>
+	<Upgrade_Rule></Upgrade_Rule>
 </flat-profile>
