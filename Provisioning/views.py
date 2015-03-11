@@ -5,14 +5,14 @@ from Provisioning.models import *
 from django.utils import timezone
 import csv
 import os
+import datetime
 
 
 def index(request):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
     firm = CurrentClientProduct.get_firmware()
-
-    all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=timezone.localtime(timezone.now()).date())
+    all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=timezone.localtime(timezone.now()).date() - datetime.timedelta(days=1))
 
     template = loader.get_template('index.html')
     context = RequestContext(request, {
@@ -82,10 +82,10 @@ def export(request):
     response['Content-Disposition'] = attachement
 
     writer = csv.writer(response, delimiter=';')
-    writer.writerow(['SN', 'MAC', 'TYPE'])
+    writer.writerow(['Type Of Product','Product Name','Hardware Version','Software Version','MAC','Serial Number','Client','Count','Date Creation','Date Update'])
     for x in all_products:
-        if x.isupdate and x.counter == 1:
-            writer.writerow([x.serial_number, x.mac, x.product_name])
+        #if x.isupdate and x.counter == 1:
+        writer.writerow([x.type_of_product,x.product_name,x.hardware_version,x.software_version,x.mac,x.serial_number,x.client,x.counter,x.create_date,x.update_date])
 
     return response
 
