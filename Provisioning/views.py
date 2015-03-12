@@ -3,27 +3,41 @@ from django.http import StreamingHttpResponse, HttpResponse, HttpResponseNotFoun
 from django.template import RequestContext, loader
 from Provisioning.models import *
 from django.utils import timezone
+from django.forms import ModelForm
 import csv
 import os
 import datetime
 
+class ContactForm(ModelForm):
+    class Meta:
+        model = CurrentClientProduct
 
 def index(request):
+    if request.method == 'POST':  # If the form has been submitted...
+        form = ContactForm(
+            request.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+            ccp = CurrentClientProduct.objects.all()[0]
+            ccpForm = form.cleaned_data['current_client_product']
+            print type(form)
+            ccp.current_client_product = ccpForm
+            ccp.save()
+
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
     firm = CurrentClientProduct.get_firmware()
     all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=timezone.localtime(timezone.now()).date() - datetime.timedelta(days=1))
-
+    contact_form = ContactForm()
     template = loader.get_template('index.html')
     context = RequestContext(request, {
         'all_products': all_products,
         'firmware': firm,
         'client': client,
-        'type_of_product': type_of_product
+        'type_of_product': type_of_product,
+        'contact_form': contact_form
     })
 
     return StreamingHttpResponse(template.render(context))
-
 
 def config(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()

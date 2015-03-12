@@ -25,6 +25,17 @@ Produit : {{ type_of_product }} </br>
 Firmware : {{ firmware }} </br>
 </br>
 
+<form action="/" method="post">{% csrf_token %}
+{{ contact_form.as_p  }}
+<input type="submit" value="UPDATE" />
+</form>
+
+<form action="/provisioning/export" method="post">
+    {% csrf_token %}
+<input type="submit" value="Export" />
+</form>
+
+
 {% if all_products %}
     <table class="test">
         <thead> <!-- En-tête du tableau -->
