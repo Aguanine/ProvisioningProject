@@ -16,7 +16,7 @@
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
-    <meta http-equiv="refresh" content="10">
+    <!--meta http-equiv="refresh" content="10"-->
 </head>
 
 <body>
@@ -26,7 +26,7 @@ Firmware : {{ firmware }} </br>
 </br>
 
 <form action="/" method="post">{% csrf_token %}
-{{ contact_form.as_p  }}
+{{ contact_form.as_ul  }}
 <input type="submit" value="UPDATE" />
 </form>
 

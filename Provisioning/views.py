@@ -7,27 +7,30 @@ from django.forms import ModelForm
 import csv
 import os
 import datetime
+from django.utils import timezone
+from django import forms
 
-class ContactForm(ModelForm):
-    class Meta:
-        model = CurrentClientProduct
+
+class CurrentClientProductForm(forms.Form):
+    current_client_product = forms.ModelChoiceField(queryset=ConfigProduct.objects.all())
+    start_date = forms.SplitDateTimeField(input_date_formats=['%d/%m/%Y'], input_time_formats=['%H:%M:%S'], required=False, initial=CurrentClientProduct.get_start_date())
 
 def index(request):
     if request.method == 'POST':  # If the form has been submitted...
-        form = ContactForm(
-            request.POST)  # A form bound to the POST data
+        form = CurrentClientProductForm(request.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
             ccp = CurrentClientProduct.objects.all()[0]
             ccpForm = form.cleaned_data['current_client_product']
-            print type(form)
+            sdForm = form.cleaned_data['start_date']
             ccp.current_client_product = ccpForm
+            ccp.start_date = sdForm
             ccp.save()
 
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
     firm = CurrentClientProduct.get_firmware()
-    all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=timezone.localtime(timezone.now()).date() - datetime.timedelta(days=1))
-    contact_form = ContactForm()
+    all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=CurrentClientProduct.get_start_date())
+    contact_form = CurrentClientProductForm()
     template = loader.get_template('index.html')
     context = RequestContext(request, {
         'all_products': all_products,
@@ -87,7 +90,7 @@ def export(request):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
 
-    all_products = client.product_set.all().filter(type_of_product=type_of_product)\
+    all_products = client.product_set.all().filter(type_of_product=type_of_product, create_date__gt=CurrentClientProduct.get_start_date())\
         #,create_date__gt=timezone.localtime(timezone.now()).date())
 
     # Create the HttpResponse object with the appropriate CSV header.

@@ -108,6 +108,7 @@ class ConfigProduct(models.Model):
 
 class CurrentClientProduct(models.Model):
     current_client_product = models.ForeignKey("ConfigProduct", unique=True)
+    start_date = models.DateTimeField(blank=True, null=True)
 
     @classmethod
     def get_client(cls):
@@ -128,3 +129,7 @@ class CurrentClientProduct(models.Model):
     def get_name_firmware(cls):
         current_client_product = CurrentClientProduct.objects.all()[0].current_client_product
         return  current_client_product.name_firmware
+
+    @classmethod
+    def get_start_date(cls):
+        return CurrentClientProduct.objects.all()[0].start_date
