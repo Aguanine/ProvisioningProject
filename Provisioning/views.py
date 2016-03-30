@@ -71,7 +71,7 @@ def configok(request, sn, mac, pdn, hwv, swv):
     p.provok(True)
     p.save()
     return StreamingHttpResponse("", content_type="text/xml")
-	
+
 def firmware(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
