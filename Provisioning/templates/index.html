@@ -49,12 +49,13 @@ Firmware : {{ firmware }} </br>
            <th>Is Update ?</th>
            <th>Date</th>
            <th>Provi. Counter</th>
+		   <th>Provi. Status</th>
        </tr>
    </thead>
 
         {% for prod in all_products %}
             {% if prod.isupdate == True %}
-                {% if prod.counter != 1 %}
+                {% if prod.provok != True %}
                     <tr class="error">
                         {% else %}
                     <tr class="valide">
@@ -70,7 +71,8 @@ Firmware : {{ firmware }} </br>
         <td>{{ prod.product_name|upper }}</td>
         <td>{{ prod.isupdate|upper }}</td>
         <td>{{ prod.create_date }}</td>
-        <td>{{ prod.counter }}</td></tr>
+        <td>{{ prod.counter }}</td>
+		<td>{{ prod.provok }}</td></tr>
         {% endfor %}
     </table>
 {% else %}

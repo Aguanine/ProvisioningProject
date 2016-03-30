@@ -14,6 +14,7 @@ class Product(models.Model):
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
     isupdate = models.BooleanField(default=False)
+	provok = models.BooleanField(default=False)
 
 
     @classmethod
@@ -60,7 +61,8 @@ class Product(models.Model):
                u'Client : %s ; ' \
                u'Count : %s ; ' \
                u'Date Creation : %s ; ' \
-               u'Date Update : %s' % (self.type_of_product,
+               u'Date Update : %s'\
+			   u'Provisioning Status : %s' % (self.type_of_product,
                                       self.product_name,
                                       self.hardware_version,
                                       self.software_version,
@@ -69,7 +71,8 @@ class Product(models.Model):
                                       self.client,
                                       self.counter,
                                       self.create_date,
-                                      self.update_date)
+                                      self.update_date,
+                                      self.provok)
 
 
 
