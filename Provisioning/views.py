@@ -68,7 +68,7 @@ def configok(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
     p = Product.get_product(sn, mac)
-    p.provok(True)
+    p.provok = True
     p.save()
     return StreamingHttpResponse("", content_type="text/xml")
 
