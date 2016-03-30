@@ -6,4 +6,5 @@
 	<Resync_Periodic>20</Resync_Periodic>
 	<Upgrade_Rule>http://217.195.31.169/cisco/spa122/firmware/1.1.0_011/SPA1xx_1.1.0_011.bin</Upgrade_Rule>
 	<Syslog_Server>10.10.255.253</Syslog_Server>
+	<Debug_Level>3</Debug_Level>
 </flat-profile>
