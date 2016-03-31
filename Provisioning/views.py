@@ -64,6 +64,7 @@ def config(request, sn, mac, pdn, hwv, swv):
 
     return StreamingHttpResponse("", content_type="text/xml")
 
+<<<<<<< HEAD
 def configok(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
@@ -72,6 +73,8 @@ def configok(request, sn, mac, pdn, hwv, swv):
     p.save()
     return StreamingHttpResponse("", content_type="text/xml")
 
+=======
+>>>>>>> parent of 545e997... update prov status
 def firmware(request, sn, mac, pdn, hwv, swv):
     client = CurrentClientProduct.get_client()
     type_of_product = CurrentClientProduct.get_type_of_product()
@@ -107,10 +110,10 @@ def export(request):
     response['Content-Disposition'] = attachement
 
     writer = csv.writer(response, delimiter=';')
-    writer.writerow(['Type Of Product','Product Name','Hardware Version','Software Version','MAC','Serial Number','Client','Count','Date Creation','Date Update','Provisioning Status'])
+    writer.writerow(['Type Of Product','Product Name','Hardware Version','Software Version','MAC','Serial Number','Client','Count','Date Creation','Date Update'])
     for x in all_products:
         #if x.isupdate and x.counter == 1:
-        writer.writerow([x.type_of_product,x.product_name,x.hardware_version,x.software_version,x.mac,x.serial_number,x.client,x.counter,x.create_date,x.update_date,x.provok])
+        writer.writerow([x.type_of_product,x.product_name,x.hardware_version,x.software_version,x.mac,x.serial_number,x.client,x.counter,x.create_date,x.update_date])
 
     return response
 
