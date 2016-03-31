@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flat-profile>
-	<Provision_Enable>Yes</Provision_Enable>
-	<Profile_Rule>http://lsau.phonesystems.net/enroll.html?forcevendor=vconnect</Profile_Rule>
-	<Resync_Periodic>20</Resync_Periodic>
-</flat-profile>
