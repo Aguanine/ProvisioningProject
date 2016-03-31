@@ -14,10 +14,6 @@ class Product(models.Model):
     client = models.ForeignKey("Client")
     type_of_product = models.ForeignKey("TypeOfProduct")
     isupdate = models.BooleanField(default=False)
-<<<<<<< HEAD
-    provok = models.BooleanField(default=False)
-=======
->>>>>>> parent of 545e997... update prov status
 
 
     @classmethod
@@ -64,12 +60,7 @@ class Product(models.Model):
                u'Client : %s ; ' \
                u'Count : %s ; ' \
                u'Date Creation : %s ; ' \
-<<<<<<< HEAD
-               u'Date Update : %s'\
-               u'Provisioning Status : %s' % (self.type_of_product,
-=======
                u'Date Update : %s' % (self.type_of_product,
->>>>>>> parent of 545e997... update prov status
                                       self.product_name,
                                       self.hardware_version,
                                       self.software_version,
