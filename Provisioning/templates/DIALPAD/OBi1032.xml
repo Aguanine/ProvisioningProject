@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OBi Configuration File -->
+<ParameterList>
+	<Object>
+		<Name>X_DeviceManagement.FirmwareUpdate.</Name>
+		<ParameterValueStruct>
+			<Name>Method</Name>
+				<Value X_UseDefault="Yes" X_DefaultValue="Disabled"/>
+		</ParameterValueStruct>
+		<ParameterValueStruct>
+			<Name>FirmwareURL</Name>
+			<Value X_UseDefault="Yes" X_DefaultValue=""/>
+		</ParameterValueStruct>
+	</Object>
+	<Object>
+		<Name>X_DeviceManagement.Provisioning.</Name>
+		<ParameterValueStruct>
+			<Name>Method</Name>
+			<Value X_UseDefault="Yes" X_DefaultValue="Disabled"/>
+		</ParameterValueStruct>
+		<ParameterValueStruct>
+			<Name>Interval</Name>
+			<Value X_UseDefault="Yes" X_DefaultValue="0"/>
+		</ParameterValueStruct>
+		<ParameterValueStruct>
+			<Name>ConfigURL</Name>
+			<Value X_UseDefault="Yes" X_DefaultValue=""/>
+		</ParameterValueStruct>
+	</Object>
+</ParameterList>
