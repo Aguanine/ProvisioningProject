@@ -13,10 +13,10 @@
 		</ParameterValueStruct>
 	</Object>
 	<Object>
-		<Name>X_DeviceManagement.Provisioning.</Name>
+		<Name>X_DeviceManagement.ITSPProvisioning.</Name>
 		<ParameterValueStruct>
 			<Name>Method</Name>
-			<Value X_UseDefault="Yes" X_DefaultValue="Disabled"/>
+			<Value X_UseDefault="Yes" X_DefaultValue="System Start"/>
 		</ParameterValueStruct>
 		<ParameterValueStruct>
 			<Name>Interval</Name>
@@ -24,7 +24,7 @@
 		</ParameterValueStruct>
 		<ParameterValueStruct>
 			<Name>ConfigURL</Name>
-			<Value X_UseDefault="Yes" X_DefaultValue=""/>
+			<Value X_UseDefault="Yes" X_DefaultValue="tftp://$DHCPOPT66/$DM.xml"/>
 		</ParameterValueStruct>
 	</Object>
 </ParameterList>
