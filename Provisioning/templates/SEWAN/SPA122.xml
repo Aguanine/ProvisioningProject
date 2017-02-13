@@ -3,5 +3,5 @@
 	<Provision_Enable>Yes</Provision_Enable>
 	<Profile_Rule>http://217.195.31.137/cisco/spa122/config/cfg/spa$MA.cfg</Profile_Rule>
 	<Resync_Periodic>20</Resync_Periodic>
-	<Upgrade_Rule>http://217.195.31.137/cisco/spa122/firmware/1.1.0_011/SPA1xx_1.1.0_011.bin</Upgrade_Rule>
+	<Upgrade_Rule>http://217.195.31.137/cisco/spa122/firmware/current.bin</Upgrade_Rule>
 </flat-profile>
